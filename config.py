@@ -1,4 +1,7 @@
-import utils
-settings, _ = utils.load_data()
+import json
+
+settings = {}
+with open("data/settings.json", "r") as f:
+    settings = json.loads(f.read())
 
 bind = f"0.0.0.0:{settings['PORT']}"

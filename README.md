@@ -49,6 +49,8 @@ python3 app.py
 gunicorn -k gevent -w 1 -c config.py app:app
 ```
 
+(If at this point, `gunicorn` doesn't work, install `gunicorn` or `gunicorn3` from your package manager and run the previous command again.)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
