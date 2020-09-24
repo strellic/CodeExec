@@ -1,10 +1,7 @@
 import epicbox
 import asyncio
 
-def sandbox_asm64(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_asm64(code, stdins=[""], callback=print):
     files = [{'name': 'main.asm', 'content': code.encode()}]
     compile_limits = {'cputime': 3, 'memory': 128}
     run_limits = {'cputime': 1, 'memory': 64}
@@ -25,10 +22,7 @@ def sandbox_asm64(code, stdins=[], callback=print):
                     result['type'] = 'run'
                     callback(result)
 
-def sandbox_cpp(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_cpp(code, stdins=[""], callback=print):
     files = [{'name': 'main.cpp', 'content': code.encode()}]
     compile_limits = {'cputime': 3, 'memory': 128}
     run_limits = {'cputime': 1, 'memory': 64}
@@ -44,10 +38,7 @@ def sandbox_cpp(code, stdins=[], callback=print):
                 result['type'] = 'run'
                 callback(result)
 
-def sandbox_c(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_c(code, stdins=[""], callback=print):
     files = [{'name': 'main.c', 'content': code.encode()}]
     compile_limits = {'cputime': 3, 'memory': 128}
     run_limits = {'cputime': 1, 'memory': 64}
@@ -63,10 +54,7 @@ def sandbox_c(code, stdins=[], callback=print):
                 result['type'] = 'run'
                 callback(result)
 
-def sandbox_csharp(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_csharp(code, stdins=[""], callback=print):
     files = [{'name': 'main.cs', 'content': code.encode()}]
     compile_limits = {'cputime': 3, 'memory': 128}
     run_limits = {'cputime': 1, 'memory': 64}
@@ -82,10 +70,7 @@ def sandbox_csharp(code, stdins=[], callback=print):
                 result['type'] = 'run'
                 callback(result)
 
-def sandbox_java(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_java(code, stdins=[""], callback=print):
     files = [{'name': 'Main.java', 'content': code.encode()}]
     compile_limits = {'cputime': 5, 'memory': 128}
     run_limits = {'cputime': 1, 'memory': 64}
@@ -101,10 +86,7 @@ def sandbox_java(code, stdins=[], callback=print):
                 result['type'] = 'run'
                 callback(result)
 
-def sandbox_node(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_node(code, stdins=[""], callback=print):
     files = [{'name': 'index.js', 'content': code.encode()}]
     limits = {'cputime': 1, 'memory': 64}
 
@@ -113,10 +95,7 @@ def sandbox_node(code, stdins=[], callback=print):
         result['type'] = 'run'
         callback(result)
 
-def sandbox_python(code, stdins=[], callback=print):
-    if not stdins:
-        stdins.append("")
-
+def sandbox_python(code, stdins=[""], callback=print):
     files = [{'name': 'main.py', 'content': code.encode()}]
     limits = {'cputime': 1, 'memory': 64}
 

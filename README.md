@@ -6,6 +6,7 @@ Initially created for GHCHS's CyberSecurity club, CodeExec was used in the club'
 CodeExec uses the `epicbox` Python library to start one-use Docker containers to sandbox unsafe code.
 
 Supports ASM64, C, C++, C#, Java 11, NodeJS 10.13.0, and Python 3.8.5.
+
 Uses `socket.io` to communicate between a client and server.
 
 ## Installation
@@ -22,20 +23,27 @@ docker pull strellic/epicbox-python:latest
 ```
 
 2. Install the Python requirements with pip:
-`pip3 install -r requirements.txt`
+
+```bash
+pip3 install -r requirements.txt
+```
 
 3. Run the app once to generate `settings.json` and `problems.json` in the `data` folder:
-`python3 app.py`
+
+```bash
+python3 app.py
+````
 
 4. Modify `settings.json` and `problems.json` to change the port and add challenges.
 
-5. Set up the server for production.
+5. Set up the production server with gunicorn.
 
-## MIT License
-Copyright 2020 Strellic (Bryce Casaje)
+```bash
+gunicorn -k gevent -w 1 -c config.py app:app
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
