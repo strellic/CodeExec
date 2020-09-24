@@ -22,13 +22,20 @@ docker pull stepik/epicbox-node:10.13.0 && \
 docker pull strellic/epicbox-python:latest
 ```
 
+(OPTIONAL) Use `venv` to make a virtual environment:
+
+```bash
+python3 -m venv env
+source env/bin/activate
+```
+
 2. Install the Python requirements with pip:
 
 ```bash
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-3. Run the app once to generate `settings.json` and `problems.json` in the `data` folder:
+3. Run the app once in Flask debug mode to generate `settings.json` and `problems.json` in the `data` folder:
 
 ```bash
 python3 app.py
@@ -36,7 +43,7 @@ python3 app.py
 
 4. Modify `settings.json` and `problems.json` to change the port and add challenges.
 
-5. Set up the production server with gunicorn.
+5. When you want to switch from Flask to a production server, start the app with Gunicorn.
 
 ```bash
 gunicorn -k gevent -w 1 -c config.py app:app
