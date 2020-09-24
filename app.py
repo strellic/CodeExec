@@ -54,6 +54,9 @@ def run(data):
         i = 0
 
         def check(result):
+            if result['type'] != 'run':
+                return
+
             nonlocal passed
             nonlocal failed
             nonlocal i
