@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>CodeExec</title>
+        <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,400,700">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="//unpkg.com/xterm@3.14.5/dist/xterm.css">
+        <link rel="stylesheet" href="/lib/codemirror.css">
+        <link rel="stylesheet" href="/assets/css/styles.min.css">
+        <style>
+            #code,
+            #output {
+                height: 100%;
+            }
+
+            .terminal {
+                padding: 2.5%;
+            }
+
+            .app,
+            html,
+            body {
+                height: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark navbar-expand-lg bg-white portfolio-navbar gradient">
+            <div class="container-fluid">
+                <img class="logo" src="assets/img/pulse.svg"><a class="navbar-brand logo" href="#">CodeExec</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item" role="presentation">
+                            <div class="btn-toolbar">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-dark" type="button" id="tasks"><i class="fa fa-tasks"></i>&nbsp; Tasks</button>
+                                    <button class="btn btn-primary" type="button" id="save" onclick="save()"><i class="fa fa-save"></i>&nbsp; Save</button>
+                                    <button class="btn btn-secondary" type="button" id="load" onclick="load()"><i class="fa fa-file"></i>&nbsp; Load</button>
+                                    <select id="lang-select">
+                                        <option value="python">Python 3.6.5</option>
+                                        <option value="java">Java 11</option>
+                                        <option value="node">NodeJS 10.13.0</option>
+                                        <option value="c">C</option>
+                                        <option value="c++">C++</option>
+                                        <option value="c#">C#</option>
+                                        <option value="asm64">ASM64</option>
+                                    </select>
+                                    <button class="btn btn-danger" type="button" id="delete" onclick="del()"><i class="fa fa-trash"></i>&nbsp; Delete</button>
+                                    <button class="btn btn-warning" type="button" id="stdin"><i class="fa fa-pencil"></i>&nbsp; Input</button>
+                                    <button class="btn btn-success" type="button" id="run"><i class="fa fa-play"></i>&nbsp; Run</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row app">
+            <div class="col-md-6" id="code"></div>
+            <div class="col-md-6" id="output"></div>
+        </div>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+        <script src="//unpkg.com/xterm@3.14.5/dist/xterm.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fit/fit.min.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+        <script src="/lib/codemirror.js"></script>
+
+        <script src="/mode/javascript/javascript.js"></script>
+        <script src="/mode/python/python.js"></script>
+        <script src="/mode/clike/clike.js"></script>
+        <script src="/mode/gas/gas.js"></script>
+
+        <script src="/assets/js/sweetalert2.all.min.js"></script>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>
