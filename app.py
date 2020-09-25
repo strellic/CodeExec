@@ -101,4 +101,5 @@ def outputHandler(result):
         emit('err', f"{Fore.RED}\n-------------------------\n\nThe program failed to run.\nDuration: {result['duration']}s\nTimeout: {result['timeout']}\nOut of Memory: {result['oom_killed']}\n\n\n")
 
 if __name__ == '__main__':
+    print(f"CodeExec running on 0.0.0.0:{settings['PORT']}...")
     sio.run(app, host='0.0.0.0', port=settings['PORT'])

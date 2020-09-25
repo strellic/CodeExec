@@ -50,7 +50,7 @@ python3 app.py
 5. When you want to switch from Flask to a production server, start the app with Gunicorn.
 
 ```bash
-gunicorn -k gevent -w 1 -c config.py app:app
+gunicorn --worker-class eventlet -w 1 -c config.py app:app
 ```
 
 (If at this point, `gunicorn` doesn't work, install `gunicorn` or `gunicorn3` from your package manager and run the previous command again.)
