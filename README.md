@@ -22,7 +22,7 @@ docker pull strellic/epicbox-asm64:latest && \
 docker pull stepik/epicbox-gcc:6.3.0 && \
 docker pull stepik/epicbox-mono:5.0.0 && \
 docker pull stepik/epicbox-java:11.0.1 && \
-docker pull stepik/epicbox-node:10.13.0 && \
+docker pull strellic/epicbox-node:latest && \
 docker pull strellic/epicbox-python:latest
 ```
 
@@ -50,7 +50,7 @@ python3 app.py
 5. When you want to switch from Flask to a production server, start the app with Gunicorn.
 
 ```bash
-gunicorn --worker-class eventlet -w 1 -c config.py app:app
+gunicorn -k eventlet -w 1 -c config.py app:app
 ```
 
 (If at this point, `gunicorn` doesn't work, install `gunicorn` or `gunicorn3` from your package manager and run the previous command again.)

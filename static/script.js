@@ -1,21 +1,27 @@
 let template = {
 	"python": "print(1 + 1)",
+
 	"java": `// One class needs to be called Main
 public class Main {
 	public static void main(String[] args) {
 		System.out.println(1 + 1);
 	}
 }`,
-	"node": "console.log(1 + 1)",
+
+	"node": `let input = require('/input.js'); // optional, but recreates input() from Python
+console.log(1 + 1);`,
+
 	"c": `#include <stdio.h>
 int main() {
 	printf("%i\\n", 1 + 1);
 	return 0;
 }`,
+
 	"c++": `#include <iostream>
 int main() {
 	std::cout << 1 + 1 << std::endl;
 }`,
+
 	"c#": `using System;
 namespace CodeExec {
 	class MyClass {
@@ -24,6 +30,7 @@ namespace CodeExec {
 		}
 	}
 }`,
+
 	"asm64": `		extern	printf		; the C function, to be called
 
         section .data		; Data section, initialized variables
@@ -73,6 +80,8 @@ let stdin = "";
 let problems = [];
 let chall = "";
 
+let lastTime = new Date();
+
 let init = () => {
 	let lang = "python";
 
@@ -99,7 +108,26 @@ let init = () => {
 	cm.on("change", () => {
 		sessionStorage.code = cm.getValue()
 	});
+
+	let hb = setInterval(() => {
+		socket.emit("heartbeat");
+
+		if(new Date() - lastTime > 10*1000) {
+			console.log("[💔] Socket died...");
+			Swal.fire({
+				type: "error",
+				title: "Lost connection!",
+				text: "The connection was lost to the CodeExec backend. Please refresh the page.",
+			});
+			clearInterval(hb);
+		}
+	}, 5000);
 };
+
+socket.on("heartbeat", () => {
+	lastTime = new Date();
+	console.log("[❤️] Socket active...");
+})
 
 window.onload = () => {
 	init();

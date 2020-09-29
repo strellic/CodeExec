@@ -152,7 +152,7 @@ epicbox.configure({
     },
 
     'node_run': {
-        'docker_image': 'stepik/epicbox-node:10.13.0',
+        'docker_image': 'strellic/epicbox-node:latest',
         'user': 'sandbox',
     },
 
