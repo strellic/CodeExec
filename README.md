@@ -39,7 +39,7 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Run the app once in Flask debug mode to generate `settings.json` and `problems.json` in the `data` folder:
+3. Run the app once in debug mode to generate `settings.json` and `problems.json` in the `data` folder:
 
 ```bash
 python3 app.py
@@ -47,7 +47,7 @@ python3 app.py
 
 4. Modify `settings.json` and `problems.json` to change the port and add challenges.
 
-5. When you want to switch from Flask to a production server, start the app with Gunicorn.
+5. When you want to switch to a production server, start the app with Gunicorn.
 
 ```bash
 gunicorn -k eventlet -w 1 -c config.py app:app
