@@ -126,7 +126,7 @@ let init = () => {
 };
 
 let resize = () => {
-    let size = $(document).height() - $('.row.app').offset().top;
+    let size = $(window).height() - $('.row.app').offset().top - 1;
     $('.row.app').css('height', size);
     term.fit();
 }
