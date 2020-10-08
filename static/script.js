@@ -94,6 +94,7 @@ let init = () => {
 		value: template[lang],
 		mode: langTable[lang],
 		lineNumbers: true,
+		lineWrapping: true
 	});
 	cm.setSize("100%", "100%");
 
@@ -124,6 +125,12 @@ let init = () => {
 	}, 5000);
 };
 
+let resize = () => {
+    let size = $(document).height() - $('.row.app').offset().top;
+    $('.row.app').css('height', size);
+    term.fit();
+}
+
 socket.on("heartbeat", () => {
 	lastTime = new Date();
 	console.log("[❤️] Socket active...");
@@ -131,6 +138,8 @@ socket.on("heartbeat", () => {
 
 window.onload = () => {
 	init();
+	resize();
+	$(window).resize(resize);
 }
 
 Terminal.applyAddon(fit);
@@ -153,8 +162,26 @@ $("#lang-select").change(() => {
 	sessionStorage.lang = lang;
 });
 
+let waiting = 0;
+
 let timerFunc = () => {
 	term.write(".");
+	waiting += 1;
+
+	if(waiting >= 8) {
+		isLoading = false;
+		isLoadingTask = false;
+		clearInterval(timer);
+		setTimeout(() => {
+			term.reset();
+			term.write("Welcome to CodeExec!\r\nIn the space to the left, you can code in your selected language.\r\nThis website supports Python, NodeJS, and more.\r\n\r\nWaiting for input...");
+			Swal.fire({
+				type: "error",
+				title: "Execution timed out",
+				text: "The execution timed out. Please try again or check if the website is down.",
+			});
+		}, 100);
+	}
 }
 
 $("#run").click(() => {
@@ -174,9 +201,9 @@ $("#run").click(() => {
 	} else {
 		term.write("Executing code.");
 	}
-	timer = setInterval(timerFunc, 1500);
+	waiting = 0;
+	timer = setInterval(timerFunc, 1000);
 	isLoading = true;
-
 });
 
 $("#new").click(() => {
@@ -295,32 +322,47 @@ function save() {
 		title: "Save File",
 		html: "Please enter the name of the code to be saved:",
 		type: "info",
-		showCancelButton: !0,
+		showCancelButton: true,
 		input: 'text'
 	}).then(val => {
-		var name = "ce_" + val.value;
+		if(!val.value.length)
+			return;
+
+		let name = "ce_" + val.value;
 		localStorage[name] = cm.getValue();
+
+		swal({
+			title: "Save File",
+			html: `File <strong>${val.value}</strong> saved successfully.`,
+			type: "success",
+		});
 	});
 }
 
 function load() {
-	if (localStorage.length == 0)
-		return;
-
-	var keys = {};
-	for (var i = 0; i < localStorage.length; i++) {
-		var key = localStorage.key(i);
+	let keys = {};
+	for (let i = 0; i < localStorage.length; i++) {
+		let key = localStorage.key(i);
 		if (key && key.startsWith("ce_")) {
-			var fix = key.substring("ce_".length);
+			let fix = key.substring("ce_".length);
 			if (key && fix)
 				keys[key] = fix;
 		}
 	}
+
+	if(!Object.keys(keys).length) {
+		return swal({
+			title: "Load File",
+			html: "There are no saved files!",
+			type: "error"
+		})
+	}
+
 	swal({
 		title: "Load File",
 		html: "Please select the saved file to be loaded:",
 		type: "info",
-		showCancelButton: !0,
+		showCancelButton: true,
 		input: 'select',
 		inputOptions: keys
 	}).then(val => {
@@ -330,23 +372,29 @@ function load() {
 }
 
 function del() {
-	if (localStorage.length == 0)
-		return;
-
-	var keys = {};
-	for (var i = 0; i < localStorage.length; i++) {
-		var key = localStorage.key(i);
+	let keys = {};
+	for (let i = 0; i < localStorage.length; i++) {
+		let key = localStorage.key(i);
 		if (key && key.startsWith("ce_")) {
-			var fix = key.substring("ce_".length);
+			let fix = key.substring("ce_".length);
 			if (key && fix)
 				keys[key] = fix;
 		}
 	}
+
+	if(!Object.keys(keys).length) {
+		return swal({
+			title: "Delete File",
+			html: "There are no saved files!",
+			type: "error"
+		})
+	}
+
 	swal({
 		title: "Delete File",
 		html: "Please select the saved file to be delete:",
 		type: "info",
-		showCancelButton: !0,
+		showCancelButton: true,
 		input: 'select',
 		inputOptions: keys
 	}).then(val => {
