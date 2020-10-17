@@ -1,1 +1,1 @@
-gunicorn -k eventlet -w 1 -c config.py app:app
+gunicorn -c config.py app:app
